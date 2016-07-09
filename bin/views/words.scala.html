@@ -1,0 +1,12 @@
+@* Words quizz *@
+@(quizz:  play.api.libs.json.JsValue )
+
+@import helper._
+
+@main("Word Quizz") {
+    @quizz  
+    <script>
+      var quizz = JSON.parse("@quizz".replace(/&quot;/g,'"'))
+      console.log(quizz)
+    </script>
+}
