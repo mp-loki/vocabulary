@@ -11,3 +11,4 @@ target
 **/*.class
 project/.sbtserver
 project/.sbtserver.lock
+bin/*

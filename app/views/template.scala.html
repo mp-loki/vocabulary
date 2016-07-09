@@ -1,0 +1,34 @@
+<div class="quiz-area" ng-show="inProgress">
+	<div ng-show="!quizOver">
+		<div id="question"><span class="questionLogos">{{question.logos}}</span><span class="questionPartOfSpeech">{{question.partOfSpeech}}</span> </div>
+		<ul id="options">
+			<li ng-repeat="option in options">
+				<label>
+					<input type="radio" name="answer" value="{{option.logos}}">
+					{{option.logos}}
+				</label>
+			</li>
+		</ul>
+		<button class="btn btn-info" ng-click="checkAnswer()" ng-show="answerMode">Submit</button>
+
+		<div ng-show="!answerMode">
+			<button class="btn btn-info" ng-click="nextQuestion()" class="next-question">Next</button>
+			<span ng-show="correctAns">That is correct!</span>
+			<span ng-show="!correctAns">Sorry, that is an incorrect answer.</span>
+		</div>
+	</div>
+
+	<div ng-show="quizOver">
+		<h2>Quiz is over</h2>
+		<button class="btn btn-info" ng-click="reset()">Play again</button>
+	</div>
+
+	<div id="score">
+		Score: {{score}}
+	</div>
+</div>
+
+<div class="intro" ng-show="!inProgress">
+	<p>Welcome to the Vocabulary Quiz</p>
+	<button class="btn btn-info" id="startQuiz" ng-click="start()">Start the Quiz</button>
+</div>

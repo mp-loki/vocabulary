@@ -21,13 +21,14 @@ class WordController extends Controller {
     implicit val translationGuessWrites = Json.writes[TranslationGuess]
     val enWords = List(be, toDo, have, search)
 
-    val translations = Vector(Translation(faire, toDo), Translation(etre, be), Translation(search, chercher), Translation(avoir, have))
+    val translations = Vector(Translation(faire, toDo), Translation(etre, be), Translation(chercher, search), Translation(avoir, have))
 
     def getWords = frenchWords :: enWords
 
     def getGuessOptions(translation: Translation, words: List[Word]): TranslationGuess = {
-        val options = words.filter(x => x.logos != translation.translated.logos).take(3)
-        TranslationGuess(translation.translatee, scala.util.Random.shuffle(translation.translated :: options))
+        val incorrectAnswers = words.filter(x => x.logos != translation.translated.logos).take(3)
+        val options = scala.util.Random.shuffle(translation.translated :: incorrectAnswers)
+        TranslationGuess(translation.translatee, options, options.indexOf(translation.translated))
     }
     
 
@@ -41,5 +42,9 @@ class WordController extends Controller {
     
     def getQuizz = Action {
         Ok(Json.stringify(Json.toJson(quizz)))
+    }
+    
+    def getQuizzTemplate = Action {
+        Ok(views.html.template())
     }
 }

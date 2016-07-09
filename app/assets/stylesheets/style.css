@@ -1,0 +1,43 @@
+html {
+    height: 100%;
+}
+body {
+    padding-top: 70px;
+    height: 100%;
+	margin: 0 auto;
+	font-family: 'Helvetica', 'Arial';
+}
+
+h2 {
+	font-weight: normal;
+	font-size: 18px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
+#options {
+	margin: 10px 0;
+}
+
+.next-question {
+	margin-right: 10px;
+}
+
+#score {
+	margin-top: 10px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.navbar-blue {
+	color: white;
+	background-color: #00AFF0; 
+}
+
+
