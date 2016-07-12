@@ -17,9 +17,10 @@ class WordController extends Controller {
     val have = Word("have", "verb", "en")
 
     val frenchWords = Json.toJson(List(avoir, chercher, etre, faire))
+    val enWords = List(be, toDo, have, search)
+    
     implicit val wordWrites = Json.writes[Word]
     implicit val translationGuessWrites = Json.writes[TranslationGuess]
-    val enWords = List(be, toDo, have, search)
 
     val translations = Vector(Translation(faire, toDo), Translation(etre, be), Translation(chercher, search), Translation(avoir, have))
 

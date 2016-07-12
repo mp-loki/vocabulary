@@ -12,3 +12,4 @@ target
 project/.sbtserver
 project/.sbtserver.lock
 bin/*
+.cache

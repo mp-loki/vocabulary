@@ -1,6 +1,6 @@
 var app = angular.module('quizApp', []);
 
-app.directive('quiz', function(quizFactory) {
+app.directive('quiz', function(quizFactory, $timeout) {
 	return {
 		restrict: 'AE',
 		scope: {},
@@ -15,9 +15,10 @@ app.directive('quiz', function(quizFactory) {
 
 			scope.reset = function() {
 				scope.inProgress = false;
+				scope.quizOver = false;
 				scope.score = 0;
 			};
-
+			
 			scope.getQuestion = function() {
 				var q = quizFactory.getQuestion(scope.id);
 				if(q) {
@@ -29,7 +30,28 @@ app.directive('quiz', function(quizFactory) {
 					scope.quizOver = true;
 				}
 			};
-
+			
+			scope.tap = function(option, $event) {
+				if (scope.answerMode) {
+					$event.stopPropagation();
+					scope.answerMode = false;
+					if (option.logos == scope.options[scope.answer].logos) {
+						option.answeredClass="panel-success";
+						scope.score++;
+						scope.correctAns = true;
+						$timeout(scope.nextQuestion, 1000);
+					} else {
+						scope.correctAns = false;
+						option.answeredClass="panel-danger";
+						scope.options[scope.answer].answeredClass = "panel-success";
+					}
+				} // else case is handled in tapNext
+			};
+			
+			scope.tapNext = function() {
+				if (!scope.answerMode) { scope.nextQuestion(); }
+			};
+			
 			scope.checkAnswer = function() {
 				if(!$('input[name=answer]:checked').length) return;
 
@@ -46,6 +68,9 @@ app.directive('quiz', function(quizFactory) {
 			};
 
 			scope.nextQuestion = function() {
+				scope.correctAns = false;
+				scope.answerMode = true;
+				scope.options.forEach(function(item){ item.answeredClass=undefined; });
 				scope.id++;
 				scope.getQuestion();
 			};
