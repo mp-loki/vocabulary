@@ -1,8 +1,18 @@
 package controllers
 
-import play.api.mvc._
-import play.api.libs.json._
 import models.words._
+import play.api._
+import play.api.mvc._
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.http.{ MimeTypes, HeaderNames }
+import play.api.libs.ws.WS
+import play.api.mvc.{ Results, Action, Controller }
+import play.api.libs.json._
+import play.api.cache.Cache
+import play.api.Play.current
+import play.mvc.Results._
+import helpers.Auth0Config
 
 class WordController extends Controller {
 
@@ -18,7 +28,7 @@ class WordController extends Controller {
 
     val frenchWords = Json.toJson(List(avoir, chercher, etre, faire))
     val enWords = List(be, toDo, have, search)
-    
+
     implicit val wordWrites = Json.writes[Word]
     implicit val translationGuessWrites = Json.writes[TranslationGuess]
 
@@ -31,20 +41,37 @@ class WordController extends Controller {
         val options = scala.util.Random.shuffle(translation.translated :: incorrectAnswers)
         TranslationGuess(translation.translatee, options, options.indexOf(translation.translated))
     }
-    
 
     val quizz = for {
         translation <- translations
     } yield getGuessOptions(translation, enWords)
 
-    def index = Action {
+    def words = AuthenticatedAction { request =>
+        //val idToken = request.session.get("idToken").get
+        //val profile = Cache.getAs[JsValue](idToken + "profile").get
         Ok(views.html.words(Json.toJson(quizz)))
     }
-    
+
+    def login = Action {
+        Ok(views.html.index(Auth0Config.get()))
+    }
+
+    def AuthenticatedAction(f: Request[AnyContent] => Result): Action[AnyContent] = {
+        Action { request =>
+            (request.session.get("idToken").flatMap { idToken =>
+                Cache.getAs[JsValue](idToken + "profile")
+            } map { profile =>
+                f(request)
+            }).orElse {
+                Some(Redirect(routes.WordController.login()))
+            }.get
+        }
+    }
+
     def getQuizz = Action {
         Ok(Json.stringify(Json.toJson(quizz)))
     }
-    
+
     def getQuizzTemplate = Action {
         Ok(views.html.template())
     }

@@ -3,11 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.PersonController.index
-POST    /person                     controllers.PersonController.addPerson
-GET     /persons                    controllers.PersonController.getPersons
+# Home page
+GET     /                controllers.Application.index
+GET     /callback                   controllers.Callback.callback(code: Option[String])
+GET     /user                       controllers.User.index
+
 #Words
-GET     /words                      controllers.WordController.index
+GET     /login                      controllers.WordController.login
+GET     /words                      controllers.WordController.words
 GET     /words/quizz                controllers.WordController.getQuizz
 GET     /views/template             controllers.WordController.getQuizzTemplate
 

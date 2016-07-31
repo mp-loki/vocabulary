@@ -6,6 +6,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.7"
 
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "2.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0",
@@ -14,6 +16,9 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
-
+libraryDependencies ++= Seq(
+  cache,
+  ws
+)
 
 fork in run := true
