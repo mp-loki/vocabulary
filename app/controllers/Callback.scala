@@ -5,7 +5,7 @@ import scala.concurrent.Future
 
 import play.api.Play
 import play.api.Play.current
-import play.api.cache.Cache
+import play.api.cache._
 import play.api.http.HeaderNames
 import play.api.http.MimeTypes
 import play.api.libs.json.JsValue
@@ -15,8 +15,9 @@ import play.api.libs.ws.WS
 import play.api.mvc.Action
 import play.api.mvc.Controller
 import helpers.Auth0Config
+import javax.inject._
 
-class Callback extends Controller {
+class Callback @Inject() (cache: CacheApi) extends Controller {
   
   def callback(codeOpt: Option[String] = None) = Action.async {
     (for {
@@ -24,7 +25,7 @@ class Callback extends Controller {
     } yield {
       getToken(code).flatMap { case (idToken, accessToken) =>
        getUser(accessToken).map { user =>
-          Cache.set(idToken+ "profile", user)
+          cache.set(idToken+ "profile", user)
           Redirect(routes.User.index())
             .withSession(
               "idToken" -> idToken,
