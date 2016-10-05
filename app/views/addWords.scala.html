@@ -1,0 +1,25 @@
+@import models.words._
+
+@(word: Form[CreateWordForm])(implicit messages: Messages)
+
+@import helper._
+
+@home("Add words") {
+    <h1>Add words to your vocabulary</h1>
+    
+     @form(routes.WordController.addWord()) {
+        @inputText(word("logos"))
+        @inputText(word("partOfSpeech"))
+        @inputText(word("language"))
+
+        <div class="buttons">
+            <input type="submit" value="Add Word"/>
+        </div>
+    }
+    
+    <script type='text/javascript' src='@routes.Assets.versioned("javascripts/getWords.js")'></script>
+
+	<ul id="words"></ul>
+
+    
+}

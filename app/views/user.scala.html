@@ -15,14 +15,18 @@
 <div class="container">
  <div class="login-page clearfix">
    <div class="logged-in-box auth0-box logged-in">
+     <!-- 
      <img class="avatar" src='@((profile \ "picture").as[String])'/>
+      -->
      <h2>Welcome @((profile \ "name").as[String])</h2>
    </div>
    <div>
      <a href="/words">Start Quiz</a>
    </div>  
+   <div>
+     <a href="/words/addWords">Add words</a>
+   </div>  
  </div>
-	
- 
+</div>	
 
 }

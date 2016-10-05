@@ -1,11 +1,22 @@
 var app = angular.module('quizApp', []);
-
+/*
+app.directive('wordsList', function() {
+	return {
+		restrict: 'AE',
+		scope: {},
+		templateUrl: '/views/template',
+		link: function(scope) {
+			
+		}
+	}
+});
+*/
 app.directive('quiz', function(quizFactory, $timeout) {
 	return {
 		restrict: 'AE',
 		scope: {},
 		templateUrl: '/views/template',
-		link: function(scope, elem, attrs) {
+		link: function(scope) {
 			scope.start = function() {
 				scope.id = 0;
 				scope.quizOver = false;

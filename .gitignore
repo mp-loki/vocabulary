@@ -13,3 +13,4 @@ project/.sbtserver
 project/.sbtserver.lock
 bin/*
 .cache
+/bin/

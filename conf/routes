@@ -13,7 +13,14 @@ GET     /login                      controllers.WordController.login
 GET     /words                      controllers.WordController.words
 GET     /words/quizz                controllers.WordController.getQuizz
 GET     /views/template             controllers.WordController.getQuizzTemplate
+GET     /words/addWords                   controllers.WordController.addWords
+GET     /words/getWords                   controllers.WordController.getWords
+POST    /words/addWord                    controllers.WordController.addWord
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 GET     /favicon.ico                controllers.Assets.at(path="/public", file="favicon.ico")
+
+GET     /personIndex                controllers.PersonController.index  
+POST    /person                     controllers.PersonController.addPerson
+GET     /persons                    controllers.PersonController.getPersons

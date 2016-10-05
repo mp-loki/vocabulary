@@ -3,58 +3,13 @@
 
 @import helper._
 
-<!DOCTYPE html>
-<html ng-app="quizApp">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vocabulary</title>
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"/>
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")" />
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/quiz.css")" />
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")"/>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script>
+@home("Vocabulary") { 
+    <script>
             var quizz = JSON.parse("@quizz".replace(/&quot;/g,'"'))
             console.log(quizz)
-        </script>
-        <script src="@routes.Assets.versioned("javascripts/appWords.js")"></script>
-        <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
-		<script type="text/javascript">
-			var lock = new Auth0Lock('XM6QOdTVunEAddl09rswITmkG6HXaRKl',
-					'mploki.eu.auth0.com');
-		
-			function signin() {
-				lock.show({
-					callbackURL : '',
-					responseType : 'code',
-					authParams : {
-						scope : 'openid email' // Learn about scopes: https://auth0.com/docs/scopes 
-					}
-				});
-			}
-			function logout() {
-				window.location.replace("https://mploki.eu.auth0.com/v2/logout?returnTo=http://localhost:9000")
-			}
-		</script>
-    </head>
- 
-    <body>
-	    <div class="navbar navbar-blue navbar-fixed-top">
-	        <div class="container">
-	            <div class="navbar-header">
-	                <ul class="nav navbar-nav">
-	                    <li><span class="navbar-brand">Vocabulary</span></li>
-	                </ul>
-	            </div>
-	        </div>
-	    </div>
-    
-        <div class="container col-sm-12 col-sm-offset-0 col-md-8 col-lg-4 col-lg-offset-2">
-            <quiz/>
+    </script>
 
-        </div>
-    </body>
-</html>
+    <div class="container col-sm-12 col-sm-offset-0 col-md-8 col-lg-4 col-lg-offset-2">
+        <quiz/>
+    </div>
+}

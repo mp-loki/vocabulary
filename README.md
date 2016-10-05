@@ -1,3 +1,3 @@
-# Getting started with Play (Scala)
+# Vocabulary
 
-This project demonstrate how to create a simple CRUD application with Play.
+This project is designed to help learning foreign language lexis in a form of quiz

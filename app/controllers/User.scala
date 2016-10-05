@@ -9,7 +9,6 @@ import play.api.libs.ws.WS
 import play.api.mvc.{Results, Action, Controller}
 import play.api.libs.json._
 import play.api.cache._
-import play.api.Play.current
 import play.mvc.Results._
 import javax.inject._
 
