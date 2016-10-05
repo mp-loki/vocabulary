@@ -10,7 +10,6 @@ import play.api.libs.ws.WS
 import play.api.mvc.{ Results, Action, Controller }
 import play.api.libs.json._
 import play.mvc.Results._
-import helpers.Auth0Config
 import javax.inject.Inject
 import play.api.cache.CacheApi
 import play.api.data.Form
@@ -24,9 +23,8 @@ import play.api.data.validation.Constraints._
 import play.api.libs.json.Json
 import models._
 import dal._
-import helpers.Auth0Config
 
-class WordController @Inject() (cache: CacheApi, repo: WordRepository, val messagesApi: MessagesApi, config: Auth0Config) extends Controller with I18nSupport {
+class WordController @Inject() (cache: CacheApi, repo: WordRepository, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
   val faire = Word(1, "faire", "verb", "fr")
   val chercher = Word(2, "chercher", "verb", "fr")
@@ -71,10 +69,6 @@ class WordController @Inject() (cache: CacheApi, repo: WordRepository, val messa
     Ok(views.html.words(Json.toJson(quizz)))
   }
 
-  def login = Action {
-    Ok(views.html.index(config))
-  }
-
   def AuthenticatedAction(f: Request[AnyContent] => Result): Action[AnyContent] = {
     Action { request =>
       (request.session.get("idToken").flatMap { idToken =>
@@ -82,7 +76,7 @@ class WordController @Inject() (cache: CacheApi, repo: WordRepository, val messa
       } map { profile =>
         f(request)
       }).orElse {
-        Some(Redirect(routes.WordController.login()))
+        Some(Redirect(routes.UserController.login()))
       }.get
     }
   }

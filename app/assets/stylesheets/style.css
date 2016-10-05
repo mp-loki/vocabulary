@@ -39,5 +39,9 @@ li {
 	color: white;
 	background-color: #00AFF0; 
 }
-
-
+.home-link {
+	cursor: pointer;
+}
+.logout {
+	margin: 5px;
+}

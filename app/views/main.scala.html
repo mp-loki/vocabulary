@@ -1,23 +1,53 @@
-@(title: String, bodyClass : String = "", scripts : Html = play.twirl.api.Html(""))(content: Html)
+@* Words quizz *@
+@(title: String)(content: Html)
+
+@import helper._
 
 <!DOCTYPE html>
-
-<html>
+<html ng-app="quizApp">
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@title</title>
-        <script src="http://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"/>
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")" />
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/quiz.css")" />
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")"/>
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/appWords.js")"></script>
+        <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
+        <script type="text/javascript">
+            var lock = new Auth0Lock('XM6QOdTVunEAddl09rswITmkG6HXaRKl',
+                    'mploki.eu.auth0.com');
         
-
-        <script type="text/javascript" src="//use.typekit.net/iws6ohy.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        @scripts
+            function signin() {
+                lock.show({
+                    callbackURL : '',
+                    responseType : 'code',
+                    authParams : {
+                        scope : 'openid email' // Learn about scopes: https://auth0.com/docs/scopes 
+                    }
+                });
+            }
+            function logout() {
+                window.location.replace("https://mploki.eu.auth0.com/v2/logout?returnTo=http://localhost:9000")
+            }
+        </script>
     </head>
-    <body class="@bodyClass">
+ 
+    <body>
+        <div class="navbar navbar-blue navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <ul class="nav navbar-nav">
+                        <li><span class="navbar-brand home-link" onclick="window.location.replace('/')">Vocabulary</span></li>
+                        <li><button class="btn btn-default logout" onclick="window.location.replace('/logout')">Logout</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         @content
     </body>
 </html>

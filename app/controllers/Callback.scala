@@ -36,7 +36,7 @@ class Callback @Inject() (cache: CacheApi, ws:WSClient, config:Auth0Config, prof
           cache.set(idToken+ "profile", user)
           val userDetails = jsHelper.getUserDetails(user);
           profileRepo.createProfileIfNotExists(userDetails)
-          Redirect(routes.User.index())
+          Redirect(routes.UserController.index())
             .withSession(
               "idToken" -> idToken,
               "accessToken" -> accessToken

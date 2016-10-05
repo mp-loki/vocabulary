@@ -4,12 +4,14 @@
 
 # Home page
 # Home page
-GET     /                controllers.Application.index
+GET     /                           controllers.UserController.index
+GET     /user                       controllers.UserController.index
+GET     /login                      controllers.UserController.login
+GET     /logout                     controllers.UserController.logout
+
 GET     /callback                   controllers.Callback.callback(code: Option[String])
-GET     /user                       controllers.User.index
 
 #Words
-GET     /login                      controllers.WordController.login
 GET     /words                      controllers.WordController.words
 GET     /words/quizz                controllers.WordController.getQuizz
 GET     /views/template             controllers.WordController.getQuizzTemplate
